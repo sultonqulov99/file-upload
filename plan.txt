@@ -1,0 +1,43 @@
+Register
+    POST
+        userId
+        userName
+        password 
+        img
+
+        Respnse 
+            status 
+            message
+            data{
+                userId
+                userName
+                img
+            }
+            token
+Login
+    POST 
+        userName
+        password
+
+        Response 
+            token
+
+Files
+    POST
+        fileId
+        userId
+        fileName 
+        mimType
+        link
+    
+        Response 
+            fileId
+            userId
+            fileName
+            mimType
+            viewLink
+            downloadLink
+            user {
+                userName
+                img
+            }

@@ -47,7 +47,7 @@ const FileGet = (req,res) => {
 
     let file = files.map(file => {
         file.user = users.find(user => user.userId == +file.userId )
-        file.viewLink = "http://localhost:4545/" + file.link
+        file.viewLink = file.link
         file.downloadLink =  file.link
 
         delete file.userId

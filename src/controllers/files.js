@@ -69,8 +69,62 @@ const DOWNLOAD = (req,res) => {
     res.download(path.join(process.cwd(),"src","uploads",fileName))
 }
 
+const DELETE = (req,res)=> {
+    const {fileId,userId} = req.query
+    let files = fs.readFileSync(path.join(process.cwd(),"src","db","files.json"),"utf-8")
+    files = JSON.parse(files)
+
+    let file = files.find(el => el.id == fileId)
+
+    if(file.userId != userId){
+        return res.status(400).json({
+            status:400,
+            message:"senga bu fileni o'chirish mumkin emas"
+        })
+    }
+    
+    file = files.filter(el => el.id != fileId)
+    fs.writeFileSync(path.join(process.cwd(),"src","db","files.json"),JSON.stringify(file,null,4))
+
+    return res.status(200).json({
+        status:200,
+        message: "Deleted success"
+    })
+
+}
+
+const UPDATE = (req,res) => {
+    const {fileId,userId} = req.query
+    const {fileName} = req.body 
+
+    let files = fs.readFileSync(path.join(process.cwd(),"src","db","files.json"),"utf-8")
+    files = JSON.parse(files)
+
+    let file = files.find(el => el.id == fileId)
+
+    if(file.userId != userId){
+        return res.status(400).json({
+            status:400,
+            message:"senga bu fileni o'zgartirish mumkin emas"
+        })
+    }
+
+    file.fileName = fileName
+
+    fs.writeFileSync(path.join(process.cwd(),"src","db","files.json"),JSON.stringify(files,null,4))
+    
+    return res.status(202).json({
+        status:202,
+        message:"file update succassd"
+    })
+
+
+}
+
 module.exports = {
     PostFiles,
     FileGet,
-    DOWNLOAD
+    DOWNLOAD,
+    UPDATE,
+    DELETE
 }

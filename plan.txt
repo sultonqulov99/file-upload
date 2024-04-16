@@ -41,3 +41,15 @@ Files
                 userName
                 img
             }
+
+
+Route public
+    /api/login 
+    /api/register 
+
+Route private
+    /users
+
+Token
+    * sigin({},parol,{expresIn:'1h'})
+    * verfy(token,parol)
